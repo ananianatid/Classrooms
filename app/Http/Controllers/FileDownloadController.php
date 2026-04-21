@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Services\FileSystemService;
 use App\Services\ZipService;
-use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class FileDownloadController extends Controller
 {
@@ -24,7 +24,7 @@ class FileDownloadController extends Controller
     /**
      * Télécharge un fichier unique
      */
-    public function downloadFile(string $path): StreamedResponse|RedirectResponse
+    public function downloadFile(string $path): BinaryFileResponse|RedirectResponse
     {
         $decodedPath = base64_decode(urldecode($path));
 
@@ -44,7 +44,7 @@ class FileDownloadController extends Controller
     /**
      * Télécharge un dossier en ZIP
      */
-    public function downloadFolder(string $path): StreamedResponse|RedirectResponse
+    public function downloadFolder(string $path): BinaryFileResponse|RedirectResponse
     {
         $decodedPath = base64_decode(urldecode($path));
 
