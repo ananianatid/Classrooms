@@ -6,80 +6,114 @@
     <style>
         .breadcrumb {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            color: #666;
+            gap: var(--space-2);
+            margin-bottom: var(--space-8);
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .breadcrumb a {
-            color: #667eea;
+            color: var(--color-accent);
             text-decoration: none;
+            transition: color 0.15s ease;
         }
 
         .breadcrumb a:hover {
+            color: var(--color-accent-hover);
             text-decoration: underline;
         }
 
         .breadcrumb span {
-            color: #999;
+            color: var(--color-border-strong);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-8);
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 400;
+            color: var(--color-text-primary);
         }
 
         .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-4);
         }
 
         .item-card {
-            background: white;
-            border: 2px solid #f0f0f0;
-            border-radius: 8px;
-            padding: 1.5rem;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: var(--space-6);
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
             cursor: pointer;
             text-decoration: none;
-            color: #333;
+            color: var(--color-text-primary);
         }
 
         .item-card:hover {
-            border-color: #667eea;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
-            transform: translateY(-3px);
+            border-color: var(--color-border-strong);
+            box-shadow: 0 4px 24px rgba(26, 23, 19, 0.06);
         }
 
         .item-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: var(--space-3);
         }
 
         .item-name {
-            font-weight: 600;
-            color: #333;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9375rem;
+            color: var(--color-text-primary);
             word-break: break-word;
+            line-height: 1.4;
         }
 
         .item-meta {
-            font-size: 0.8rem;
-            color: #999;
-            margin-top: 0.5rem;
+            font-size: 0.8125rem;
+            color: var(--color-text-muted);
+            margin-top: var(--space-2);
+            font-weight: 400;
         }
 
-        .back-button {
-            margin-bottom: 1rem;
+        .empty-state {
+            text-align: center;
+            padding: var(--space-12);
+            color: var(--color-text-muted);
+        }
+
+        .empty-state p {
+            font-size: 0.9375rem;
         }
     </style>
 @endsection
 
 @section('content')
     <div class="box">
-        <div class="back-button">
-            <a href="{{ route('semesters.index') }}" class="btn">← Retour aux semestres</a>
+        <div class="breadcrumb">
+            <a href="{{ route('semesters.index') }}">Accueil</a>
+            <span>/</span>
+            <span>{{ $semester }}</span>
         </div>
 
-        <h1>📚 {{ $semester }}</h1>
+        <div class="section-header">
+            <h1 class="section-title">{{ $semester }}</h1>
+            <a href="{{ route('semesters.index') }}" class="btn btn--secondary">← Retour</a>
+        </div>
 
         @if (count($items) > 0)
             <div class="items-grid">
@@ -100,7 +134,7 @@
                 @endforeach
             </div>
         @else
-            <div style="text-align: center; padding: 3rem; color: #999;">
+            <div class="empty-state">
                 <p>📭 Ce semestre est vide</p>
             </div>
         @endif

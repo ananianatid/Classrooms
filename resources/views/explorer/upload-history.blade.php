@@ -4,87 +4,120 @@
 
 @section('extra-styles')
     <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+
+        .page-label {
+            display: inline-flex;
+            padding: 0.25rem 0.625rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            background: var(--color-accent-light);
+            color: var(--color-accent-hover);
+            margin-bottom: var(--space-4);
+        }
+
+        .page-description {
+            font-size: 1.125rem;
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            margin-top: var(--space-2);
+        }
+
         .controls {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
             flex-wrap: wrap;
         }
 
         .items-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 2rem;
+            margin-top: var(--space-4);
         }
 
         .items-table thead {
-            background: #f8f9fa;
-            border-bottom: 2px solid #667eea;
+            border-bottom: 2px solid var(--color-border);
         }
 
         .items-table th {
-            padding: 1rem;
+            padding: var(--space-4) var(--space-4);
             text-align: left;
-            font-weight: 600;
-            color: #333;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
         }
 
         .items-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #f0f0f0;
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--color-border);
+            font-size: 0.9375rem;
+        }
+
+        .items-table tbody tr {
+            transition: background 0.15s ease;
         }
 
         .items-table tbody tr:hover {
-            background: #f8f9fa;
+            background: var(--color-bg-secondary);
         }
 
         .item-name {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            color: #667eea;
+            gap: var(--space-3);
+            color: var(--color-accent);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.15s ease;
         }
 
         .item-name:hover {
-            color: #764ba2;
-            text-decoration: underline;
+            color: var(--color-accent-hover);
         }
 
         .item-icon {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
         .empty-state {
             text-align: center;
-            padding: 3rem;
-            color: #999;
+            padding: var(--space-12);
+            color: var(--color-text-muted);
         }
 
-        .action-btn {
+        .empty-state p {
+            font-size: 0.9375rem;
+        }
+
+        .text-secondary {
+            color: var(--color-text-secondary);
+        }
+
+        .download-btn {
             padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            margin-right: 0.5rem;
-        }
-
-        .delete-btn {
-            background: #dc3545;
-        }
-
-        .delete-btn:hover {
-            background: #c82333;
+            font-size: 0.875rem;
         }
     </style>
 @endsection
 
 @section('content')
     <div class="box">
-        <h1>📋 Historique des Uploads</h1>
+        <div class="page-header">
+            <span class="page-label">Fichiers</span>
+            <h1>Historique des Uploads</h1>
+            <p class="page-description">Retrouvez tous vos fichiers téléversés</p>
+        </div>
 
         <div class="controls">
             <a href="{{ route('upload.form') }}" class="btn">📤 Nouveau fichier</a>
-            <a href="{{ route('semesters.index') }}" class="btn">← Retour</a>
+            <a href="{{ route('semesters.index') }}" class="btn btn--secondary">← Retour</a>
         </div>
 
         @if (count($items) > 0)
@@ -107,10 +140,10 @@
                                         {{ $item['name'] }}
                                     </a>
                                 </td>
-                                <td>{{ $item['sizeFormatted'] }}</td>
-                                <td>{{ $item['modifiedAtFormatted'] }}</td>
+                                <td class="text-secondary">{{ $item['sizeFormatted'] }}</td>
+                                <td class="text-secondary">{{ $item['modifiedAtFormatted'] }}</td>
                                 <td>
-                                    <a href="{{ route('download.file', $item['encodedPath']) }}" class="action-btn btn">
+                                    <a href="{{ route('download.file', $item['encodedPath']) }}" class="download-btn btn btn--secondary">
                                         📥
                                     </a>
                                 </td>
@@ -122,7 +155,7 @@
         @else
             <div class="empty-state">
                 <p>📭 Aucun fichier uploadé pour le moment</p>
-                <a href="{{ route('upload.form') }}" class="btn" style="margin-top: 1rem;">
+                <a href="{{ route('upload.form') }}" class="btn" style="margin-top: var(--space-4);">
                     📤 Uploader un fichier
                 </a>
             </div>

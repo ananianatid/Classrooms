@@ -4,96 +4,134 @@
 
 @section('extra-styles')
     <style>
-        .upload-form {
-            max-width: 600px;
-            margin: 2rem auto;
+        .upload-container {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+
+        .page-label {
+            display: inline-flex;
+            padding: 0.25rem 0.625rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            background: var(--color-accent-light);
+            color: var(--color-accent-hover);
+            margin-bottom: var(--space-4);
+        }
+
+        .page-description {
+            font-size: 1.125rem;
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            margin-top: var(--space-2);
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: var(--space-6);
         }
 
         .form-group label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .form-group input[type="file"],
-        .form-group input[type="text"] {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #f0f0f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input[type="file"]:focus,
-        .form-group input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-2);
         }
 
         .file-drop-zone {
-            border: 2px dashed #667eea;
-            border-radius: 8px;
-            padding: 2rem;
+            border: 2px dashed var(--color-border-strong);
+            border-radius: 12px;
+            padding: var(--space-8);
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            background: #f8f9ff;
+            transition: all 0.2s ease;
+            background: var(--color-bg-card);
         }
 
         .file-drop-zone:hover {
-            background: #f0f1ff;
-            border-color: #764ba2;
+            background: var(--color-bg-secondary);
+            border-color: var(--color-accent);
         }
 
         .file-drop-zone.active {
-            background: #e8ebff;
-            border-color: #764ba2;
+            background: var(--color-accent-light);
+            border-color: var(--color-accent);
         }
 
         .file-drop-zone p {
-            color: #666;
-            margin: 0.5rem 0;
+            color: var(--color-text-primary);
+            margin: var(--space-2) 0;
+        }
+
+        .file-drop-zone p strong {
+            font-weight: 500;
         }
 
         .file-info {
-            color: #999;
-            font-size: 0.9rem;
-            margin-top: 1rem;
+            color: var(--color-text-muted);
+            font-size: 0.875rem;
+            margin-top: var(--space-3);
+            font-family: var(--font-mono);
         }
 
         .submit-btn {
             width: 100%;
-            padding: 1rem;
-            font-size: 1.1rem;
+            padding: var(--space-4);
+            font-size: 1rem;
+            justify-content: center;
         }
 
         .info-box {
-            background: #e8f4f8;
-            border-left: 4px solid #667eea;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 2rem;
-            color: #333;
+            background: var(--color-bg-secondary);
+            border-left: 4px solid var(--color-accent);
+            padding: var(--space-4);
+            border-radius: 8px;
+            margin-bottom: var(--space-8);
+            color: var(--color-text-secondary);
         }
 
         .info-box strong {
-            color: #667eea;
+            color: var(--color-text-primary);
+            display: block;
+            margin-bottom: var(--space-2);
+        }
+
+        .info-box small {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .action-links {
+            display: flex;
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+
+        .action-links .btn {
+            flex: 1;
+            justify-content: center;
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="box upload-form">
-        <h1>📤 Upload un Fichier</h1>
+    <div class="box upload-container">
+        <div class="page-header">
+            <span class="page-label">Fichier</span>
+            <h1>Uploader un Fichier</h1>
+            <p class="page-description">Ajoutez des documents à votre espace de stockage</p>
+        </div>
 
         <div class="info-box">
-            <strong>ℹ️ Informations :</strong><br>
+            <strong>ℹ️ Informations</strong>
             <small>
                 Taille maximum : 100 MB<br>
                 Types acceptés : PDF, Office, Images, Vidéos, ZIP, Texte
@@ -106,9 +144,9 @@
             <div class="form-group">
                 <div class="file-drop-zone" id="dropZone">
                     <p>📁 <strong>Glissez-déposez votre fichier ici</strong></p>
-                    <p style="color: #999;">ou</p>
+                    <p style="color: var(--color-text-muted);">ou</p>
                     <input type="file" name="file" id="fileInput" style="display: none;" required>
-                    <button type="button" onclick="document.getElementById('fileInput').click()" class="btn">
+                    <button type="button" onclick="document.getElementById('fileInput').click()" class="btn btn--secondary">
                         Sélectionner un fichier
                     </button>
                     <div class="file-info" id="fileName">Aucun fichier sélectionné</div>
@@ -118,9 +156,14 @@
             <button type="submit" class="btn submit-btn">✅ Uploader</button>
         </form>
 
-        <a href="{{ route('upload.history') }}" class="btn" style="margin-top: 1rem; width: 100%; text-align: center;">
-            📋 Voir l'historique des uploads
-        </a>
+        <div class="action-links">
+            <a href="{{ route('upload.history') }}" class="btn btn--secondary">
+                📋 Voir l'historique
+            </a>
+            <a href="{{ route('semesters.index') }}" class="btn btn--secondary">
+                ← Retour
+            </a>
+        </div>
     </div>
 
     <script>
